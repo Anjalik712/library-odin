@@ -75,5 +75,4 @@ submitButton.addEventListener("click",(e)=>{
   const isRead=document.querySelector('input[name="read"]:checked')?.value==='true';
   addBookToLibrary(title,author,pages,isRead);
   dialog.close();
-  displayBooks();
 })
