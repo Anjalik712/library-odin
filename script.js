@@ -60,14 +60,14 @@ const closeButton=document.querySelector("dialog button");
 const inputTitle=document.getElementById("bookTitle");
 const inputAuthor=document.getElementById("bookAuthor");
 const inputPages=document.getElementById("Pages");
-const submitButton=document.getElementById("submitButton");
 addButton.addEventListener("click",()=>{
     dialog.showModal();
 })
 closeButton.addEventListener("click",()=>{
   dialog.close();
 })
-submitButton.addEventListener("click",(e)=>{
+const form=document.querySelector(".form");
+form.addEventListener("submit",(e)=>{
   e.preventDefault();
   const title=inputTitle.value;
   const author=inputAuthor.value;
@@ -75,4 +75,5 @@ submitButton.addEventListener("click",(e)=>{
   const isRead=document.querySelector('input[name="read"]:checked')?.value==='true';
   addBookToLibrary(title,author,pages,isRead);
   dialog.close();
+  form.reset();
 })
