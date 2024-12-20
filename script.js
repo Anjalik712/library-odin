@@ -10,12 +10,11 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(book);
   displayBooks();
 }
-addBookToLibrary("abc", "pqr", 30, false);
-addBookToLibrary("Lmn", "xy", 29, true);
-addBookToLibrary("abc", "pqr", 30, false);
-addBookToLibrary("Lmn", "xy", 29, true);
+addBookToLibrary("A Tale of Two Cities", "Charles Dickens", 544 , false);
+addBookToLibrary("The Hobbit", "J. R. R. Tolkien", 310 , true);
 
 
+const toggleButton=document.getElementById("toggleButton");
 function displayBooks() {
   const cards = document.querySelector(".cards");
   const existingCards=document.querySelectorAll(".card");
@@ -30,19 +29,51 @@ function displayBooks() {
         <div>Book name: ${book.title}</div>
         <div>Author: ${book.author}</div>
         <div>Pages: ${book.pages}</div>
-        <div>Read: ${book.read}</div>
+        <div class="read">
+          <div>Read:</div>
+          <button id="toggleButton" onclick="toggleRead(${index})">${book.read}</button>
+        </div>  
+        <div class="toggleAlert">*Click the button to change your preference.</div>
         </div>`;
   });
-  if(myLibrary.length===0){
-    cards.remove();
+}
+function toggleRead(index){
+  if (myLibrary[index].read===true)
+  {
+    toggleButton.textContent="False";
+    myLibrary[index].read=false;
   }
+  else{
+    toggleButton.textContent="True";
+    myLibrary[index].read=true;
+  }
+  displayBooks();
 }
 function removeBookFunction(index){
     myLibrary.splice(index,1);
     displayBooks();
 }
 
+const dialog=document.querySelector("dialog");
 const addButton=document.querySelector("#addNewBookButton");
+const closeButton=document.querySelector("dialog button");
+const inputTitle=document.getElementById("bookTitle");
+const inputAuthor=document.getElementById("bookAuthor");
+const inputPages=document.getElementById("Pages");
+const submitButton=document.getElementById("submitButton");
 addButton.addEventListener("click",()=>{
-    alert("hi");
+    dialog.showModal();
+})
+closeButton.addEventListener("click",()=>{
+  dialog.close();
+})
+submitButton.addEventListener("click",(e)=>{
+  e.preventDefault();
+  const title=inputTitle.value;
+  const author=inputAuthor.value;
+  const pages=inputPages.value;
+  const isRead=document.querySelector('input[name="read"]:checked')?.value==='true';
+  addBookToLibrary(title,author,pages,isRead);
+  dialog.close();
+  displayBooks();
 })
